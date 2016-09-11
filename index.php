@@ -1,5 +1,4 @@
 <?php
-
 //INCLUDE THE FILES NEEDED...
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
@@ -16,4 +15,3 @@ $lv = new LayoutView();
 
 
 $lv->render(false, $v, $dtv);
-
