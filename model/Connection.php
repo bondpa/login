@@ -24,9 +24,9 @@ class Connection {
       $result->data_seek($j);
       $row = $result->fetch_array(MYSQLI_ASSOC);
 
-      echo 'id: ' . $row['id'] . '<br>';
-      echo 'userid: ' . $row['userid'] . '<br>';
-      echo 'passwd: ' . $row['passwd'] . '<br><br>';
+      // echo 'id: ' . $row['id'] . '<br>';
+      // echo 'userid: ' . $row['userid'] . '<br>';
+      // echo 'passwd: ' . $row['passwd'] . '<br><br>';
     }
 
     $result->close();

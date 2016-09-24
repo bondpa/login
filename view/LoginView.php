@@ -10,7 +10,7 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
-
+	public $message = '';
 
 	/**
 	 * Create HTTP response
@@ -20,10 +20,9 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		$message = '';
 
-		$response = $this->generateLoginFormHTML($message);
-    $response .= $this->generateLogoutButtonHTML($message);
+		$response = $this->generateLoginFormHTML($this->message);
+	    // $response .= $this->generateLogoutButtonHTML($message);
 
 		return $response;
 	}
@@ -70,11 +69,17 @@ class LoginView {
 	}
 
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getRequestUserName() {
-		//RETURN REQUEST VARIABLE: USERNAME
-    $username = $_POST(self::$name);
-    echo $username;
-    return $username;
+	private function getrequestusername() {
+		//return request variable: username
+	    $username = $_post(self::$name);
+	    echo $username;
+	    return $username;
 	}
 
+	private function getrequestpassword() {
+		//return request variable: password
+	    $password = $_post(self::$password);
+	    return $password;
+	}
+	
 }
