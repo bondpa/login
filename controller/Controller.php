@@ -6,7 +6,8 @@ class Controller {
     private $layoutView;
     private $loginView;
     private $model;
-  
+    public $isLoggedIn = false;
+     
     public function __construct($loginView, $layoutView, $model) {
       // echo "constructing Controller object:<br>";
       $this->loginView = $loginView;
@@ -27,6 +28,16 @@ class Controller {
           // echo "username is set and equals " . $_POST['LoginView::UserName'] . "<br>";
         } else {
           $this->loginView->message = "Username is missing";
+        }
+        if(!empty($_POST['LoginView::Password']) and !empty($_POST['LoginView::UserName'])) {
+          // check if user exists in database and act accordingly
+          $result = $this->model->isAuthorizedUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
+          if($result == true) {
+            $this->loginView->message = "Welcome";
+            $this->isLoggedIn = true;
+          } else {
+            $this->loginView->message = "Wrong name or password";
+          }
         }
       }
     } 

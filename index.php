@@ -10,8 +10,7 @@ require_once('controller/Controller.php');
 error_reporting(E_ALL); 
 ini_set('display_errors', 'On');
 
-$c = new Connection();
-$c->connect($config);
+$c = new Connection($config);
 
 //CREATE OBJECTS OF THE VIEWS
 $v = new LoginView();
@@ -21,4 +20,4 @@ $lv = new LayoutView();
 $controller = new Controller($v, $lv, $c);
 $controller->checkPost();
 
-$lv->render(false, $v, $dtv);
+$lv->render($controller->isLoggedIn, $v, $dtv);

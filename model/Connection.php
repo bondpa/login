@@ -1,38 +1,36 @@
 <?php
 
 require_once('db-config.php');
-// echo $config['host'];
 class Connection {
+  public $connection = NULL;
 
-	public function connect($config) {
+	public function __construct($config) {
     $this->config = $config;
     $connection = new mysqli($this->config['host'], $this->config['login'], $this->config['password'], $this->config['db']);
 
     if($connection->connect_error) {
       die($connection->connect_error);
     }
+    $this->connection = $connection;
+	}
 
-    $query = "select * from users";
-
+	public function isAuthorizedUser($userName, $password) {
+    $connection = $this->connection;
+    $authorized = false;
+    
+    $query = "select * from users where binary userid='" . $userName . "' and binary passwd='" . $password . "'";
     $result = $connection->query($query);
-
     if(!$result) die($connection->error);
-
-    $rows = $result->num_rows;
-
-    for($j = 0; $j < $rows; ++$j) {
-      $result->data_seek($j);
-      $row = $result->fetch_array(MYSQLI_ASSOC);
-
-      // echo 'id: ' . $row['id'] . '<br>';
-      // echo 'userid: ' . $row['userid'] . '<br>';
-      // echo 'passwd: ' . $row['passwd'] . '<br><br>';
+    
+    if (mysqli_num_rows($result) == 0) {
+      $authorized = false;
+    } else {
+      $authorized = true;
     }
-
+    
     $result->close();
-
-    $connection->close();
+    
+    return $authorized;
 	}
 
 }
-
