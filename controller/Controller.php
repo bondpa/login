@@ -5,8 +5,7 @@ class Controller {
     private $passwd = '';
     private $layoutView;
     private $loginView;
-    private $model;
-    public $isLoggedIn = false;
+    public $model;
      
     public function __construct($loginView, $layoutView, $model) {
       // echo "constructing Controller object:<br>";
@@ -34,7 +33,7 @@ class Controller {
           $result = $this->model->isAuthorizedUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
           if($result == true) {
             $this->loginView->message = "Welcome";
-            $this->isLoggedIn = true;
+            $this->model->isLoggedIn = true;
           } else {
             $this->loginView->message = "Wrong name or password";
           }

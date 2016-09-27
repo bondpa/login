@@ -20,4 +20,4 @@ $lv = new LayoutView();
 $controller = new Controller($v, $lv, $c);
 $controller->checkPost();
 
-$lv->render($controller->isLoggedIn, $v, $dtv);
+$lv->render($controller->model->isLoggedIn, $v, $dtv);

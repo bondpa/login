@@ -3,6 +3,7 @@
 require_once('db-config.php');
 class Connection {
   public $connection = NULL;
+  public $isLoggedIn = false;
 
 	public function __construct($config) {
     $this->config = $config;
@@ -32,5 +33,5 @@ class Connection {
     
     return $authorized;
 	}
-
+	
 }
