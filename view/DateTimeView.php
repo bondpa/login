@@ -9,7 +9,7 @@ class DateTimeView {
     $date = date('jS');
     $monthAndYear = date('F Y');
     $time = date('H:i:s');
-
+    
     $timeString = $dayOfWeek . ", the " . $date . " of "
       . $monthAndYear . ", The time is " . $time;
 
