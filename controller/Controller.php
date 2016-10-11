@@ -11,11 +11,30 @@ class Controller {
     public function __construct($loginView, $layoutView, $model) {
       // echo "constructing Controller object:<br>";
       $this->loginView = $loginView;
+      $loginView->isInRegisterMode = false;
       $this->layoutView = $layoutView;
       $this->model = $model;
     }
   
     public function checkPost() {
+      if(isset($_GET['register'])) {
+        $this->loginView->isInRegisterMode = true;
+      } else {
+        $this->loginView->isInRegisterMode = false;
+      }
+      // if(isset($_GET['register'])) {
+      //   if(strlen($_POST['RegisterView::UserName']) < 3) {
+      //     $this->loginView->registerMessage = "Username has too few characters, at least 3 characters.";
+      //   }
+      // }
+      // if(isset($_GET['register'])) {
+      //   if(strlen($_POST['RegisterView::Password']) < 6) {
+      //     $this->loginView->registerMessage = "Password has too few characters, at least 6 characters.";
+      //   }
+      // }
+      
+      
+        
       if(isset($_POST['LoginView::KeepMeLoggedIn'])) {
         $this->keepMeLoggedIn = true;
       }
