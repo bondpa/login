@@ -27,12 +27,7 @@ class LoginView {
 	    if($isLoggedIn) {
 	    	$response .= $this->generateLogoutButtonHTML($this->message);
 		} else {
-			if($this->isInRegisterMode)
-			{
-				$response .= $this->generateRegisterFormHTML($this->registerMessage);
-			} else {
-				$response .= $this->generateLoginFormHTML($this->message);
-			}
+			$response .= $this->generateLoginFormHTML($this->message);
 		}
 		return $response;
 	}
@@ -89,29 +84,7 @@ class LoginView {
 			</form>
 		';
 	}
-
-	private function generateRegisterFormHTML($message) {
-		return '
-			<form method="post" >
-				<h2>Register new user</h2>
-				<fieldset>
-					<legend>Register a new user - Write username and password</legend>
-					<p id="RegisterView::Message">' . $message . '</p>
-
-					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="RegisterView::UserName" name="RegisterView::UserName" value="' . $this->getrequestusername() .'" /><br>
-
-					<label for="' . self::$password . '">Password :</label>
-					<input type="password" id="RegisterView::Password" name="RegisterView::Password" /><br>
-
-					<label for="' . self::$passwordRepeat . '">Repeat Password :</label>
-					<input type="password" id="RegisterView::PasswordRepeat" name="RegisterView::PasswordRepeat" /><br>
-					
-					<input type="submit" name="' . self::$register . '" value="Register" />
-				</fieldset>
-			</form>
-		';
-	}
+	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getrequestusername() {
 		//return request variable: username

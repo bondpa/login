@@ -2,7 +2,7 @@
 
 class LayoutView {
 
-  public function render($isLoggedIn, LoginView $v, DateTimeView $dtv) {
+  public function render($isLoggedIn, $isInRegisterMode, LoginView $v, RegisterView $rv, DateTimeView $dtv) {
     // var_dump($_POST);
     // var_dump($_SESSION);
     echo '<!DOCTYPE html>
@@ -16,13 +16,21 @@ class LayoutView {
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
 
           <div class="container">
-              ' . $v->response($isLoggedIn) . '
+              ' . $this->response($isLoggedIn, $isInRegisterMode, $v, $rv) . '
 
               ' . $dtv->show() . '
           </div>
          </body>
       </html>
     ';
+  }
+  
+  private function response($isLoggedIn, $isInRegisterMode, LoginView $v, RegisterView $rv) {
+    if($isInRegisterMode) {
+      return $rv->response($isLoggedIn);
+    } else {
+      return $v->response($isLoggedIn);
+    }
   }
 
   private function renderIsLoggedIn($isLoggedIn) {

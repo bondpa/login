@@ -6,21 +6,32 @@ class Controller {
     private $passwd = '';
     private $layoutView;
     private $loginView;
+    private $registerView;
     public $model;
      
-    public function __construct($loginView, $layoutView, $model) {
+    public function __construct($loginView, $registerView, $layoutView, $model) {
       // echo "constructing Controller object:<br>";
       $this->loginView = $loginView;
+      $this->registerView = $registerView;
       $loginView->isInRegisterMode = false;
       $this->layoutView = $layoutView;
       $this->model = $model;
     }
+    
+    public function isInRegisterMode() {
+      return(isset($_GET['register']));
+    }  
   
     public function checkPost() {
       if(isset($_GET['register'])) {
         $this->loginView->isInRegisterMode = true;
       } else {
         $this->loginView->isInRegisterMode = false;
+      }
+      if($this->isInRegisterMode()) {
+        if(isset($_POST['RegisterView::UserName']) && strlen($_POST['RegisterView::UserName']) < 3) {
+          $this->registerView->registerMessage = "Username has too few characters, at least 3 characters.";
+        } 
       }
       // if(isset($_GET['register'])) {
       //   if(strlen($_POST['RegisterView::UserName']) < 3) {
