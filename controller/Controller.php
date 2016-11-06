@@ -29,23 +29,23 @@ class Controller {
         $this->loginView->isInRegisterMode = false;
       }
       if($this->isInRegisterMode()) {
+        if(isset($_POST['RegisterView::Password']) && strlen($_POST['RegisterView::Password']) < 6) {
+          // echo 'too short password';
+          $this->registerView->registerMessage = "Password has too few characters, at least 6 characters.";
+        }
+      }
+      if($this->isInRegisterMode()) {
         if(isset($_POST['RegisterView::UserName']) && strlen($_POST['RegisterView::UserName']) < 3) {
+          // echo 'too short username';
           $this->registerView->registerMessage = "Username has too few characters, at least 3 characters.";
         } 
       }
-      // if(isset($_GET['register'])) {
-      //   if(strlen($_POST['RegisterView::UserName']) < 3) {
-      //     $this->loginView->registerMessage = "Username has too few characters, at least 3 characters.";
-      //   }
-      // }
-      // if(isset($_GET['register'])) {
-      //   if(strlen($_POST['RegisterView::Password']) < 6) {
-      //     $this->loginView->registerMessage = "Password has too few characters, at least 6 characters.";
-      //   }
-      // }
-      
-      
-        
+      if($this->isInRegisterMode()) {
+        if(isset($_POST['RegisterView::Password']) && isset($_POST['RegisterView::PasswordRepeat']) && 
+          $_POST['RegisterView::Password'] !== $_POST['RegisterView::PasswordRepeat']) {
+          $this->registerView->registerMessage = "Passwords do not match.";
+        } 
+      }
       if(isset($_POST['LoginView::KeepMeLoggedIn'])) {
         $this->keepMeLoggedIn = true;
       }
