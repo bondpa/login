@@ -5,15 +5,9 @@ class LoginView {
 	private static $logout = 'LoginView::Logout';
 	private static $name = 'LoginView::UserName';
 	private static $password = 'LoginView::Password';
-	private static $passwordRepeat = 'LoginView::PasswordRepeat';
-	private static $register = 'LoginView::Register';
-	private static $cookieName = 'LoginView::CookieName';
-	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
-	public $isInRegisterMode = false;
 	public $message = '';
-	public $registerMessage = '';
 
 	/**
 	 * Create HTTP response
@@ -23,25 +17,13 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response($isLoggedIn) {
-		$response = $this->generateRegisterLinkHTML($this->isInRegisterMode);
+		$response = '<p><a href="?register">Register a new user</a></p>';
 	    if($isLoggedIn) {
 	    	$response .= $this->generateLogoutButtonHTML($this->message);
 		} else {
 			$response .= $this->generateLoginFormHTML($this->message);
 		}
 		return $response;
-	}
-
-	private function generateRegisterLinkHTML() {
-		if(!$this->isInRegisterMode) {
-			return '
-				<p><a href="?register">Register a new user</a></p>
-			';
-		} else {
-			return '
-				<p><a href="?">Back to login</a></p>
-			';
-		}
 	}
 	
 	/**
