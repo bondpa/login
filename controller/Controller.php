@@ -23,11 +23,6 @@ class Controller {
     }  
   
     public function checkPost() {
-      if(isset($_GET['register'])) {
-        $this->loginView->isInRegisterMode = true;
-      } else {
-        $this->loginView->isInRegisterMode = false;
-      }
       if($this->isInRegisterMode()) {
         if(isset($_POST['RegisterView::Password']) && strlen($_POST['RegisterView::Password']) < 6) {
           $this->registerView->registerMessage = "Password has too few characters, at least 6 characters.";
