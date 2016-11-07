@@ -3,7 +3,7 @@
 class RegisterView {
 	private static $login = 'RegisterView::Login';
 	private static $logout = 'RegisterView::Logout';
-	private static $name = 'RegisterView::UserName';
+	public static $name = 'RegisterView::UserName';
 	private static $password = 'RegisterView::Password';
 	private static $passwordRepeat = 'RegisterView::PasswordRepeat';
 	private static $register = 'RegisterView::Register';
