@@ -1,17 +1,12 @@
 <?php
 
 class RegisterView {
-	private static $login = 'RegisterView::Login';
 	private static $logout = 'RegisterView::Logout';
 	public static $name = 'RegisterView::UserName';
 	private static $password = 'RegisterView::Password';
 	private static $passwordRepeat = 'RegisterView::PasswordRepeat';
 	private static $register = 'RegisterView::Register';
-	private static $cookieName = 'RegisterView::CookieName';
-	private static $cookiePassword = 'RegisterView::CookiePassword';
-	private static $keep = 'RegisterView::KeepMeLoggedIn';
 	private static $messageId = 'RegisterView::Message';
-	public $isInRegisterMode = false;
 	public $message = '';
 	public $registerMessage = '';
 
