@@ -27,31 +27,24 @@ class Controller {
         if(!$this->registerView->isUserNameLengthValidated()) {
           $this->registerView->registerMessage = "Username has too few characters, at least 3 characters.";
         } 
-      }
-      if($this->isInRegisterMode()) {
         if(!$this->registerView->isPasswordLengthValidated()) {
           $this->registerView->registerMessage = "Password has too few characters, at least 6 characters.";
         }
-      }
-      if($this->isInRegisterMode()) {
         if(!$this->registerView->isFormFilled()) {
           $this->registerView->registerMessage = "Password has too few characters, at least 6 characters. Username has too few characters, at least 3 characters.";
         }  
-      }
-      if($this->isInRegisterMode()) {
         if(!$this->registerView->doPasswordsMatch()) {
           $this->registerView->registerMessage = "Passwords do not match.";
         }
-      }
-      if($this->registerView->containsInvalidCharactersInUserName()) {
-        $this->registerView->registerMessage = "Username contains invalid characters.";
-        $this->registerView->removeInvalidCharactersFromUserName();
-      }
-      if($this->isInRegisterMode()) {
+        if($this->registerView->containsInvalidCharactersInUserName()) {
+          $this->registerView->registerMessage = "Username contains invalid characters.";
+          $this->registerView->removeInvalidCharactersFromUserName();
+        }
         if(!$this->registerView->hasSubmittedForm()) {
           $this->registerView->registerMessage = '';   
         }
       }
+      
       if(isset($_POST['LoginView::KeepMeLoggedIn'])) {
         $this->keepMeLoggedIn = true;
       }
