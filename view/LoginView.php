@@ -53,7 +53,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $message . '</p>
 
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $this->getrequestusername() .'" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $this->getRequestUserName() .'" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -68,7 +68,7 @@ class LoginView {
 	}
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getrequestusername() {
+	private function getRequestUserName() {
 		//return request variable: username
 		if(isset($_POST[self::$name])) {
 		  $username = $_POST[self::$name];
@@ -78,7 +78,7 @@ class LoginView {
 	    return $username;
 	}
 
-	private function getrequestpassword() {
+	private function getRequestPassword() {
 		//return request variable: password
 	    $password = $_post(self::$password);
 	    return $password;

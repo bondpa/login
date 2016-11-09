@@ -21,28 +21,23 @@ class Controller {
     public function isInRegisterMode() {
       return(isset($_GET['register']));
     }  
-  
+    
     public function checkPost() {
       if($this->isInRegisterMode()) {
-        if(isset($_POST['RegisterView::Password']) && strlen($_POST['RegisterView::Password']) < 6) {
-          $this->registerView->registerMessage = "Password has too few characters, at least 6 characters.";
-        }
-      }
-      if($this->isInRegisterMode()) {
-        if(isset($_POST['RegisterView::UserName']) && strlen($_POST['RegisterView::UserName']) < 3) {
+        if(!$this->registerView->isUserNameLengthValidated()) {
           $this->registerView->registerMessage = "Username has too few characters, at least 3 characters.";
         } 
       }
       if($this->isInRegisterMode()) {
-        if(isset($_POST['RegisterView::Password']) 
-        && isset($_POST['RegisterView::UserName']) 
-        && isset($_POST['RegisterView::PasswordRepeat']) 
-        && $_POST['RegisterView::UserName'] == '' 
-        && $_POST['RegisterView::Password'] == '' 
-        && $_POST['RegisterView::PasswordRepeat'] == '') {
+        if(!$this->registerView->isPasswordLengthValidated()) {
+          $this->registerView->registerMessage = "Password has too few characters, at least 6 characters.";
+        }
+      }
+      if($this->isInRegisterMode()) {
+        if(!$this->registerView->isFormFilled()) {
           $this->registerView->registerMessage = "Password has too few characters, at least 6 characters. Username has too few characters, at least 3 characters.";
-        } 
-      }  
+        }  
+      }
       if($this->isInRegisterMode()) {
         if(isset($_POST['RegisterView::Password']) && isset($_POST['RegisterView::PasswordRepeat']) && 
           $_POST['RegisterView::Password'] !== $_POST['RegisterView::PasswordRepeat']) {
@@ -55,6 +50,11 @@ class Controller {
           $this->registerView->registerMessage = "Username contains invalid characters.";
 		      $_POST['RegisterView::UserName'] = strip_tags($_POST['RegisterView::UserName']);
         } 
+      }
+      if($this->isInRegisterMode()) {
+        if(!$this->registerView->hasSubmittedForm()) {
+          $this->registerView->registerMessage = '';   
+        }
       }
       if(isset($_POST['LoginView::KeepMeLoggedIn'])) {
         $this->keepMeLoggedIn = true;

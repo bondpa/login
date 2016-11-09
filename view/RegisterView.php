@@ -7,6 +7,8 @@ class RegisterView {
 	private static $passwordRepeat = 'RegisterView::PasswordRepeat';
 	private static $register = 'RegisterView::Register';
 	private static $messageId = 'RegisterView::Message';
+	private static $minPasswordLength = 6;
+	private static $minUserNameLength = 3;
 	public $message = '';
 	public $registerMessage = '';
 
@@ -64,8 +66,39 @@ class RegisterView {
 			</form>
 		';
 	}
+	
+	public function isPasswordLengthValidated() {
+		$password = $this->getRequestPassword();
+		if(strlen($password) < self::$minPasswordLength) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public function isUserNameLengthValidated() {
+		$name = $this->getRequestUserName();
+		if(strlen($name) < self::$minUserNameLength) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public function isFormFilled() {
+		$password = $this->getRequestPassword();
+		$passwordRepeat = $this->getRequestPasswordRepeat();
+		$name = $this->getRequestUserName();
+		return strlen($password) != 0 && strlen($passwordRepeat) != 0 && strlen($name) != 0;
+	}
+	
+    public function hasSubmittedForm() {
+    	return(isset($_POST[self::$password]) && isset($_POST[self::$passwordRepeat]) && isset($_POST[self::$name]));
+    }
+    
+	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getrequestusername() {
+	private function getRequestUserName() {
 		//return request variable: username
 		if(isset($_POST[self::$name])) {
 		  $username = $_POST[self::$name];
@@ -75,10 +108,24 @@ class RegisterView {
 	    return $username;
 	}
 
-	private function getrequestpassword() {
+	private function getRequestPassword() {
 		//return request variable: password
-	    $password = $_post(self::$password);
+		if(isset($_POST[self::$password])) {
+		    $password = $_POST[self::$password];
+		} else {
+			$password = "";
+		}
 	    return $password;
+	}
+	
+	private function getRequestPasswordRepeat() {
+		//return request variable: password
+		if(isset($_POST[self::$passwordRepeat])) {
+		    $passwordRepeat = $_POST[self::$passwordRepeat];
+		} else {
+			$passwordRepeat = "";
+		}
+	    return $passwordRepeat;
 	}
 	
 }
