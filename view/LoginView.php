@@ -80,8 +80,28 @@ class LoginView {
 
 	private function getRequestPassword() {
 		//return request variable: password
-	    $password = $_post(self::$password);
+		if(isset($_POST[self::$password])) {
+		    $password = $_POST[self::$password];
+		} else {
+			$password = "";
+		}
 	    return $password;
+	}
+	
+	public function wantsToBeLoggedIn() {
+		if(isset($_POST[self::$keep])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public function wantsToLogOut() {
+      if(isset($_POST[self::$logout]) && $_POST[self::$logout] == 'logout') {
+      	return true;
+      }	else {
+      	return false;
+      }
 	}
 	
 }
