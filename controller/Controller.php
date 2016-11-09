@@ -39,17 +39,13 @@ class Controller {
         }  
       }
       if($this->isInRegisterMode()) {
-        if(isset($_POST['RegisterView::Password']) && isset($_POST['RegisterView::PasswordRepeat']) && 
-          $_POST['RegisterView::Password'] !== $_POST['RegisterView::PasswordRepeat']) {
+        if(!$this->registerView->doPasswordsMatch()) {
           $this->registerView->registerMessage = "Passwords do not match.";
-        } 
-      }  
-      if($this->isInRegisterMode()) {
-        if(isset($_POST['RegisterView::UserName']) && isset($_POST['RegisterView::UserName']) && 
-          $_POST['RegisterView::UserName'] !== strip_tags($_POST['RegisterView::UserName'])) {
-          $this->registerView->registerMessage = "Username contains invalid characters.";
-		      $_POST['RegisterView::UserName'] = strip_tags($_POST['RegisterView::UserName']);
-        } 
+        }
+      }
+      if($this->registerView->containsInvalidCharactersInUserName()) {
+        $this->registerView->registerMessage = "Username contains invalid characters.";
+        $this->registerView->removeInvalidCharactersFromUserName();
       }
       if($this->isInRegisterMode()) {
         if(!$this->registerView->hasSubmittedForm()) {

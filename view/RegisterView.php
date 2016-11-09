@@ -2,7 +2,7 @@
 
 class RegisterView {
 	private static $logout = 'RegisterView::Logout';
-	public static $name = 'RegisterView::UserName';
+	private static $name = 'RegisterView::UserName';
 	private static $password = 'RegisterView::Password';
 	private static $passwordRepeat = 'RegisterView::PasswordRepeat';
 	private static $register = 'RegisterView::Register';
@@ -96,6 +96,26 @@ class RegisterView {
     	return(isset($_POST[self::$password]) && isset($_POST[self::$passwordRepeat]) && isset($_POST[self::$name]));
     }
     
+    public function doPasswordsMatch() {
+    	if($this->hasSubmittedForm()) {
+	    	return $this->getRequestPassword() === $this->getRequestPasswordRepeat();	
+    	} else {
+    		return false;
+    	}
+    }
+    
+    public function containsInvalidCharactersInUserName() {
+        if($this->hasSubmittedForm() && 
+        ($this->getRequestUserName() !== strip_tags($this->getRequestUserName()))) {
+        	return true;
+        } else {
+        	return false;
+        }
+    }
+    
+    public function removeInvalidCharactersFromUserName() {
+	    $_POST[self::$name] = strip_tags($this->getRequestUserName());
+    }
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
