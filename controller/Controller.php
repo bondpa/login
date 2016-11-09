@@ -1,7 +1,6 @@
 <?php
 
 class Controller {
-    private $keepMeLoggedIn = false;
     private $userid = '';
     private $passwd = '';
     private $layoutView;
@@ -10,7 +9,6 @@ class Controller {
     public $model;
      
     public function __construct($loginView, $registerView, $layoutView, $model) {
-      // echo "constructing Controller object:<br>";
       $this->loginView = $loginView;
       $this->registerView = $registerView;
       $loginView->isInRegisterMode = false;
@@ -23,6 +21,14 @@ class Controller {
     }  
     
     public function checkPost() {
+      if($this->isInRegisterMode()) {
+        $this->doRegisterMode();
+      } else {
+        $this->doLoginMode();
+      }
+    }
+    
+    public function doRegisterMode() {
       if($this->isInRegisterMode()) {
         if(!$this->registerView->isUserNameLengthValidated()) {
           $this->registerView->registerMessage = "Username has too few characters, at least 3 characters.";
@@ -44,9 +50,9 @@ class Controller {
           $this->registerView->registerMessage = '';   
         }
       }
+    }
       
-      $this->keepMeLoggedIn = $this->loginView->wantsToBeLoggedIn();
-      
+    public function doLoginMode() {
       if($this->model->isLoggedIn()) {
         // check if user exists in database and act accordingly
         $result = $this->model->isAuthorizedUser($_SESSION['username'], $_SESSION['passwd']);
@@ -58,23 +64,11 @@ class Controller {
       }
       
       else {
-        // not logged in, test to autenicate with cookie
-        // $result = $this->model->isRememberedWithCookie();
-        // if($result == true) {
-        //   $this->loginView->message = "Welcome back with cookie";
-        // }
-        if(empty($_POST)) {
-          // $this->loginView->message = "";
-          // if($this->keepMeLoggedIn) {
-          //   $this->loginView->message = "Welcome back with cookie";
-          // }
-        } else {
-          if(!empty($_POST['LoginView::Password'])) {
-          } else {
+        if(!empty($_POST)) {
+          if(empty($_POST['LoginView::Password'])) {
             $this->loginView->message = "Password is missing";
           }
-          if(!empty($_POST['LoginView::UserName'])) {
-          } else {
+          if(empty($_POST['LoginView::UserName'])) {
             $this->loginView->message = "Username is missing";
           }
           if(!empty($_POST['LoginView::Password']) and !empty($_POST['LoginView::UserName'])) {
@@ -84,17 +78,6 @@ class Controller {
               $this->loginView->message = "Welcome";
               $_SESSION['username'] = $_POST['LoginView::UserName'];
               $_SESSION['passwd'] = $_POST['LoginView::Password'];
-              if($this->keepMeLoggedIn) {
-                // $token = rand();
-                // $user = array(
-                //   'username' => $_POST['LoginView::UserName'],
-                //   'token' => $token 
-                // );     
-                // setcookie("loginCredentials", serialize($user), time() + 7200); 
-                // $this->loginView->message = "Welcome and you will be remembered";
-                // // tell model to store token in database
-                // $this->model->saveCookieInformation($user['username'], $token);
-              }
             } else {
               $this->loginView->message = "Wrong name or password";
             }
