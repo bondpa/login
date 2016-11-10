@@ -1,7 +1,6 @@
 <?php
 require_once('model/Session.php');
 require_once('view/LoginView.php'); 
-require_once('view/DateTimeView.php'); 
 require_once('view/LayoutView.php'); 
 require_once('view/RegisterView.php');  
 require_once('model/Connection.php'); 
@@ -16,7 +15,6 @@ class Controller {
      
     public function __construct() {
       $this->loginView = new LoginView();
-      $this->dateTimeView = new DateTimeView();
       $this->registerView = new RegisterView();
       $this->layoutView = new LayoutView();
       $this->model = new Connection();
@@ -40,7 +38,7 @@ class Controller {
       $this->checkPost();
       $this->layoutView->render($this->model->isLoggedIn(), 
                                 $this->isInRegisterMode(), $this->loginView, 
-                                $this->registerView, $this->dateTimeView);
+                                $this->registerView);
     }
     
     private function doRegisterMode() {

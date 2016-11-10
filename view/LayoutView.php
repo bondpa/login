@@ -1,8 +1,13 @@
 <?php
+require_once('view/DateTimeView.php'); 
 
 class LayoutView {
 
-  public function render($isLoggedIn, $isInRegisterMode, LoginView $v, RegisterView $rv, DateTimeView $dtv) {
+  public function __construct() {
+    $this->dateTimeView = new DateTimeView();
+  }
+  
+  public function render($isLoggedIn, $isInRegisterMode, LoginView $v, RegisterView $rv) {
     echo '<!DOCTYPE html>
       <html>
         <head>
@@ -16,7 +21,7 @@ class LayoutView {
           <div class="container">
               ' . $this->response($isLoggedIn, $isInRegisterMode, $v, $rv) . '
 
-              ' . $dtv->show() . '
+              ' . $this->dateTimeView->show() . '
           </div>
          </body>
       </html>
