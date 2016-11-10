@@ -1,12 +1,12 @@
 <?php
+require_once('model/Session.php');
 
 class Controller {
-    private $userid = '';
-    private $passwd = '';
     private $layoutView;
     private $loginView;
     private $registerView;
     public $model;
+    private $session;
      
     public function __construct($loginView, $registerView, $layoutView, $model) {
       $this->loginView = $loginView;
@@ -14,6 +14,7 @@ class Controller {
       $loginView->isInRegisterMode = false;
       $this->layoutView = $layoutView;
       $this->model = $model;
+      $this->session = new Session();
     }
     
     public function isInRegisterMode() {
@@ -28,7 +29,7 @@ class Controller {
       }
     }
     
-    public function doRegisterMode() {
+    private function doRegisterMode() {
       if($this->isInRegisterMode()) {
         if(!$this->registerView->isUserNameLengthValidated()) {
           $this->registerView->registerMessage = "Username has too few characters, at least 3 characters.";
@@ -52,10 +53,9 @@ class Controller {
       }
     }
       
-    public function doLoginMode() {
+    private function doLoginMode() {
       if($this->model->isLoggedIn()) {
-        // check if user exists in database and act accordingly
-        $result = $this->model->isAuthorizedUser($_SESSION['username'], $_SESSION['passwd']);
+        $result = $this->model->isAuthorizedUser($this->session->getSessionUserName(), $this->session->getSessionPassword());
         if($result == true) {
           $this->loginView->message = "";
         } else {
@@ -71,12 +71,11 @@ class Controller {
           $this->loginView->message = "Username is missing";
         }
         if($this->loginView->userCredentialsAreSubmitted()) {
-          // check if user exists in database and act accordingly
           $result = $this->model->isAuthorizedUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
           if($result == true) {
             $this->loginView->message = "Welcome";
-            $_SESSION['username'] = $_POST['LoginView::UserName'];
-            $_SESSION['passwd'] = $_POST['LoginView::Password'];
+            $this->session->setSessionUserName($_POST['LoginView::UserName']);
+            $this->session->setSessionPassword($_POST['LoginView::Password']);
           } else {
             $this->loginView->message = "Wrong name or password";
           }

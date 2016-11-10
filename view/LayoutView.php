@@ -3,8 +3,6 @@
 class LayoutView {
 
   public function render($isLoggedIn, $isInRegisterMode, LoginView $v, RegisterView $rv, DateTimeView $dtv) {
-    // var_dump($_POST);
-    // var_dump($_SESSION);
     echo '<!DOCTYPE html>
       <html>
         <head>
