@@ -4,7 +4,7 @@ namespace controller;
 require_once('RegisterController.php'); 
 require_once('LoginController.php'); 
 
-class Controller {
+class Router {
   private $controller;
    
   public function __construct() {
