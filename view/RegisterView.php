@@ -1,4 +1,5 @@
 <?php
+namespace view;
 
 class RegisterView {
 	private static $logout = 'RegisterView::Logout';

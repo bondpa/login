@@ -1,4 +1,6 @@
 <?php
+namespace controller;
+
 require_once('RegisterController.php'); 
 require_once('LoginController.php'); 
 
@@ -7,9 +9,9 @@ class Controller {
    
   public function __construct() {
     if($this->isInRegisterMode()) {
-      $this->controller = new RegisterController();
+      $this->controller = new \controller\RegisterController();
     } else {
-      $this->controller = new LoginController();
+      $this->controller = new \controller\LoginController();
     }
   }
   

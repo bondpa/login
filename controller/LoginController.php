@@ -1,4 +1,6 @@
 <?php
+namespace controller;
+
 require_once('model/Session.php');
 require_once('view/LayoutView.php'); 
 require_once('model/Connection.php'); 
@@ -9,9 +11,9 @@ class LoginController {
     private $session;
      
     public function __construct() {
-      $this->layoutView = new LayoutView(false);
-      $this->model = new Connection();
-      $this->session = new Session();
+      $this->layoutView = new \view\LayoutView(false);
+      $this->model = new \model\Connection();
+      $this->session = new \model\Session();
     }
     
     public function run() {

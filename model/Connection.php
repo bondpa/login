@@ -1,11 +1,13 @@
 <?php
+namespace model;
+
 require_once('db-config.php');
 
 class Connection {
   public $connection = NULL;
 
 	public function __construct() {
-    $connection = new mysqli(Configuration::$host, Configuration::$login, Configuration::$password, Configuration::$db);
+    $connection = new \mysqli(Configuration::$host, Configuration::$login, Configuration::$password, Configuration::$db);
 
     if($connection->connect_error) {
       die($connection->connect_error);

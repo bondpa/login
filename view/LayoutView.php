@@ -1,4 +1,6 @@
 <?php
+namespace view;
+
 require_once('view/DateTimeView.php'); 
 require_once('view/RegisterView.php');  
 require_once('view/LoginView.php'); 
@@ -7,11 +9,11 @@ class LayoutView {
   public $view;
 
   public function __construct($isInRegisterMode) {
-    $this->dateTimeView = new DateTimeView();
+    $this->dateTimeView = new \view\DateTimeView();
     if($isInRegisterMode) {
-      $this->view = new RegisterView();
+      $this->view = new \view\RegisterView();
     } else {
-      $this->view = new LoginView();
+      $this->view = new \view\LoginView();
     }
   }
   

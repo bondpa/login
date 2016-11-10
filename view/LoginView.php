@@ -1,4 +1,5 @@
 <?php
+namespace view;
 
 class LoginView {
 	private static $login = 'LoginView::Login';
