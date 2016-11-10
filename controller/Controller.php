@@ -73,15 +73,7 @@ class Controller {
       }
       
       if($this->loginView->userCredentialsAreSubmitted()) {
-        $result = $this->model->isAuthorizedUser($this->loginView->getRequestUserName(), 
-                                                $this->loginView->getRequestPassword());
-        if($result == true) {
-          $this->loginView->message = "Welcome";
-          $this->session->setSessionUserName($this->loginView->getRequestUserName());
-          $this->session->setSessionPassword($this->loginView->getRequestPassword());
-        } else {
-          $this->loginView->message = "Wrong name or password";
-        }
+        $this->doTryToLogin();
       }
       
       if($this->loginView->noFormSubmitted()) {
@@ -89,6 +81,18 @@ class Controller {
       }
       
     } 
+    
+    private function doTryToLogin() {
+      $result = $this->model->isAuthorizedUser($this->loginView->getRequestUserName(), 
+                                              $this->loginView->getRequestPassword());
+      if($result == true) {
+        $this->loginView->message = "Welcome";
+        $this->session->setSessionUserName($this->loginView->getRequestUserName());
+        $this->session->setSessionPassword($this->loginView->getRequestPassword());
+      } else {
+        $this->loginView->message = "Wrong name or password";
+      }
+    }
     
     private function doLogout() {
       if($this->model->isLoggedIn()) {
