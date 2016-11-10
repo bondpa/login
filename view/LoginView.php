@@ -72,8 +72,7 @@ class LoginView {
 		return $this->getRequestUserName() === "";
 	}
 	
-	private function getRequestUserName() {
-		//return request variable: username
+	public function getRequestUserName() {
 		if(isset($_POST[self::$name])) {
 		  $username = $_POST[self::$name];
 		} else {
@@ -94,8 +93,7 @@ class LoginView {
 		return empty($_POST);
 	}
 	
-	private function getRequestPassword() {
-		//return request variable: password
+	public function getRequestPassword() {
 		if(isset($_POST[self::$password])) {
 		    $password = $_POST[self::$password];
 		} else {

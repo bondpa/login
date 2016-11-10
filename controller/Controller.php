@@ -54,40 +54,40 @@ class Controller {
     }
       
     private function doLoginMode() {
+      if($this->loginView->wantsToLogOut()) {
+        $this->doLogout();
+        return;
+      }
+      
       if($this->model->isLoggedIn()) {
-        $result = $this->model->isAuthorizedUser($this->session->getSessionUserName(), $this->session->getSessionPassword());
+        $this->loginView->message = "";
+        return;
+      }
+      
+      if($this->loginView->isRequestPasswordMissing()) {
+        $this->loginView->message = "Password is missing";
+      }
+      
+      if($this->loginView->isRequestUserNameMissing()) {
+        $this->loginView->message = "Username is missing";
+      }
+      
+      if($this->loginView->userCredentialsAreSubmitted()) {
+        $result = $this->model->isAuthorizedUser($this->loginView->getRequestUserName(), 
+                                                $this->loginView->getRequestPassword());
         if($result == true) {
-          $this->loginView->message = "";
+          $this->loginView->message = "Welcome";
+          $this->session->setSessionUserName($this->loginView->getRequestUserName());
+          $this->session->setSessionPassword($this->loginView->getRequestPassword());
         } else {
           $this->loginView->message = "Wrong name or password";
         }
       }
       
-      else {
-        if($this->loginView->isRequestPasswordMissing()) {
-          $this->loginView->message = "Password is missing";
-        }
-        if($this->loginView->isRequestUserNameMissing()) {
-          $this->loginView->message = "Username is missing";
-        }
-        if($this->loginView->userCredentialsAreSubmitted()) {
-          $result = $this->model->isAuthorizedUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
-          if($result == true) {
-            $this->loginView->message = "Welcome";
-            $this->session->setSessionUserName($_POST['LoginView::UserName']);
-            $this->session->setSessionPassword($_POST['LoginView::Password']);
-          } else {
-            $this->loginView->message = "Wrong name or password";
-          }
-        }
-        if($this->loginView->noFormSubmitted()) {
-          $this->loginView->message = "";
-        }
+      if($this->loginView->noFormSubmitted()) {
+        $this->loginView->message = "";
       }
       
-      if($this->loginView->wantsToLogOut()) {
-        $this->doLogout();
-      }
     } 
     
     private function doLogout() {

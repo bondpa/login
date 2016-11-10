@@ -118,7 +118,7 @@ class RegisterView {
     }
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getRequestUserName() {
+	public function getRequestUserName() {
 		//return request variable: username
 		if(isset($_POST[self::$name])) {
 		  $username = $_POST[self::$name];
@@ -128,7 +128,7 @@ class RegisterView {
 	    return $username;
 	}
 
-	private function getRequestPassword() {
+	public function getRequestPassword() {
 		//return request variable: password
 		if(isset($_POST[self::$password])) {
 		    $password = $_POST[self::$password];
