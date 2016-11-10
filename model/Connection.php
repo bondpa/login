@@ -5,7 +5,6 @@ class Connection {
   public $connection = NULL;
 
 	public function __construct() {
-    //$connection = new mysqli($this->config['host'], $this->config['login'], $this->config['password'], $this->config['db']);
     $connection = new mysqli(Configuration::$host, Configuration::$login, Configuration::$password, Configuration::$db);
 
     if($connection->connect_error) {
@@ -13,14 +12,6 @@ class Connection {
     }
     $this->connection = $connection;
 	}
-
-  public function saveCookieInformation($userName, $token) {
-    $connection = $this->connection;
-    
-    $query = "update users set token='" . $token . "' where userid ='" . $userName . "'";
-    $result = $connection->query($query);
-    if(!$result) die($connection->error);
-  }
 
 	public function isAuthorizedUser($userName, $password) {
     $connection = $this->connection;
@@ -44,36 +35,9 @@ class Connection {
 	public function isLoggedIn() {
     if(!empty($_SESSION['username']) and !empty($_SESSION['passwd'])) {
       return true;  
-    } 
-    if($this->isRememberedWithCookie()) {
-      return true;
-    }
-	  return false; 
-	}
-	
-	public function isRememberedWithCookie() {
-	  if(empty($_COOKIE['user']['username'])) {
-	    return false;
-	  } else {
-  	  $userName = $_COOKIE['user']['username'];
-  	  $token = $_COOKIE['user']['token']; 
-  	  echo $userName . " " . $token;
-	  }
-    $connection = $this->connection;
-    $rememderedWithCookie = false;
-    
-    $query = "select * from users where binary userid='" . $userName . "' and token='" . $token . "'";
-    $result = $connection->query($query);
-    if(!$result) die($connection->error);
-    
-    if (mysqli_num_rows($result) == 0) {
-      $rememderedWithCookie = false;
     } else {
-      $rememderedWithCookie = true;
+	  return false; 
     }
-    
-    $result->close();
-    return $rememderedWithCookie;
 	}
 	
 	

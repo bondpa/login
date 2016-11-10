@@ -5,7 +5,6 @@ require_once('model/Connection.php');
 
 class Controller {
     private $layoutView;
-    private $dateTimeView;
     public $model;
     private $session;
      
