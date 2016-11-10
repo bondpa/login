@@ -1,13 +1,21 @@
 <?php
 require_once('view/DateTimeView.php'); 
+require_once('view/RegisterView.php');  
+require_once('view/LoginView.php'); 
 
 class LayoutView {
+  public $view;
 
-  public function __construct() {
+  public function __construct($isInRegisterMode) {
     $this->dateTimeView = new DateTimeView();
+    if($isInRegisterMode) {
+      $this->view = new RegisterView();
+    } else {
+      $this->view = new LoginView();
+    }
   }
   
-  public function render($isLoggedIn, $view) {
+  public function render($isLoggedIn) {
     echo '<!DOCTYPE html>
       <html>
         <head>
@@ -19,7 +27,7 @@ class LayoutView {
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
 
           <div class="container">
-              ' . $this->response($isLoggedIn, $view) . '
+              ' . $this->response($isLoggedIn) . '
 
               ' . $this->dateTimeView->show() . '
           </div>
@@ -28,8 +36,8 @@ class LayoutView {
     ';
   }
   
-  private function response($isLoggedIn, $view) {
-    return $view->response($isLoggedIn);
+  private function response($isLoggedIn) {
+    return $this->view->response($isLoggedIn);
   }
 
   private function renderIsLoggedIn($isLoggedIn) {
