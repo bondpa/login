@@ -1,12 +1,12 @@
 <?php
-
 require_once('db-config.php');
+
 class Connection {
   public $connection = NULL;
 
-	public function __construct($config) {
-    $this->config = $config;
-    $connection = new mysqli($this->config['host'], $this->config['login'], $this->config['password'], $this->config['db']);
+	public function __construct() {
+    //$connection = new mysqli($this->config['host'], $this->config['login'], $this->config['password'], $this->config['db']);
+    $connection = new mysqli(Configuration::$host, Configuration::$login, Configuration::$password, Configuration::$db);
 
     if($connection->connect_error) {
       die($connection->connect_error);

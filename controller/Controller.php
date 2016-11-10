@@ -1,20 +1,27 @@
 <?php
 require_once('model/Session.php');
+require_once('view/LoginView.php'); 
+require_once('view/DateTimeView.php'); 
+require_once('view/LayoutView.php'); 
+require_once('view/RegisterView.php');  
+require_once('model/Connection.php'); 
 
 class Controller {
     private $layoutView;
     private $loginView;
     private $registerView;
+    private $dateTimeView;
     public $model;
     private $session;
      
-    public function __construct($loginView, $registerView, $layoutView, $model) {
-      $this->loginView = $loginView;
-      $this->registerView = $registerView;
-      $loginView->isInRegisterMode = false;
-      $this->layoutView = $layoutView;
-      $this->model = $model;
+    public function __construct() {
+      $this->loginView = new LoginView();
+      $this->dateTimeView = new DateTimeView();
+      $this->registerView = new RegisterView();
+      $this->layoutView = new LayoutView();
+      $this->model = new Connection();
       $this->session = new Session();
+ 
     }
     
     public function isInRegisterMode() {
@@ -27,6 +34,13 @@ class Controller {
       } else {
         $this->doLoginMode();
       }
+    }
+    
+    public function run() {
+      $this->checkPost();
+      $this->layoutView->render($this->model->isLoggedIn(), 
+                                $this->isInRegisterMode(), $this->loginView, 
+                                $this->registerView, $this->dateTimeView);
     }
     
     private function doRegisterMode() {
@@ -58,28 +72,22 @@ class Controller {
         $this->doLogout();
         return;
       }
-      
       if($this->model->isLoggedIn()) {
         $this->loginView->message = "";
         return;
       }
-      
       if($this->loginView->isRequestPasswordMissing()) {
         $this->loginView->message = "Password is missing";
       }
-      
       if($this->loginView->isRequestUserNameMissing()) {
         $this->loginView->message = "Username is missing";
       }
-      
       if($this->loginView->userCredentialsAreSubmitted()) {
         $this->doTryToLogin();
       }
-      
       if($this->loginView->noFormSubmitted()) {
         $this->loginView->message = "";
       }
-      
     } 
     
     private function doTryToLogin() {
