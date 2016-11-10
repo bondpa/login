@@ -7,7 +7,7 @@ class LayoutView {
     $this->dateTimeView = new DateTimeView();
   }
   
-  public function render($isLoggedIn, $isInRegisterMode, LoginView $v, RegisterView $rv) {
+  public function render($isLoggedIn, $view) {
     echo '<!DOCTYPE html>
       <html>
         <head>
@@ -19,7 +19,7 @@ class LayoutView {
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
 
           <div class="container">
-              ' . $this->response($isLoggedIn, $isInRegisterMode, $v, $rv) . '
+              ' . $this->response($isLoggedIn, $view) . '
 
               ' . $this->dateTimeView->show() . '
           </div>
@@ -28,12 +28,8 @@ class LayoutView {
     ';
   }
   
-  private function response($isLoggedIn, $isInRegisterMode, LoginView $v, RegisterView $rv) {
-    if($isInRegisterMode) {
-      return $rv->response($isLoggedIn);
-    } else {
-      return $v->response($isLoggedIn);
-    }
+  private function response($isLoggedIn, $view) {
+    return $view->response($isLoggedIn);
   }
 
   private function renderIsLoggedIn($isLoggedIn) {
