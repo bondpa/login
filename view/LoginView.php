@@ -68,6 +68,10 @@ class LoginView {
 	}
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
+	public function isRequestUserNameMissing() {
+		return $this->getRequestUserName() === "";
+	}
+	
 	private function getRequestUserName() {
 		//return request variable: username
 		if(isset($_POST[self::$name])) {
@@ -78,6 +82,18 @@ class LoginView {
 	    return $username;
 	}
 
+	public function isRequestPasswordMissing() {
+		return $this->getRequestPassword() === "";
+	}
+	
+	public function userCredentialsAreSubmitted() {
+		return !$this->isRequestPasswordMissing() && !$this->isRequestUserNameMissing();
+	}
+
+	public function noFormSubmitted() {
+		return empty($_POST);
+	}
+	
 	private function getRequestPassword() {
 		//return request variable: password
 		if(isset($_POST[self::$password])) {

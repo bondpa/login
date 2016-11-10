@@ -64,36 +64,42 @@ class Controller {
       }
       
       else {
-        if(!empty($_POST)) {
-          if(empty($_POST['LoginView::Password'])) {
-            $this->loginView->message = "Password is missing";
-          }
-          if(empty($_POST['LoginView::UserName'])) {
-            $this->loginView->message = "Username is missing";
-          }
-          if(!empty($_POST['LoginView::Password']) and !empty($_POST['LoginView::UserName'])) {
-            // check if user exists in database and act accordingly
-            $result = $this->model->isAuthorizedUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
-            if($result == true) {
-              $this->loginView->message = "Welcome";
-              $_SESSION['username'] = $_POST['LoginView::UserName'];
-              $_SESSION['passwd'] = $_POST['LoginView::Password'];
-            } else {
-              $this->loginView->message = "Wrong name or password";
-            }
+        if($this->loginView->isRequestPasswordMissing()) {
+          $this->loginView->message = "Password is missing";
+        }
+        if($this->loginView->isRequestUserNameMissing()) {
+          $this->loginView->message = "Username is missing";
+        }
+        if($this->loginView->userCredentialsAreSubmitted()) {
+          // check if user exists in database and act accordingly
+          $result = $this->model->isAuthorizedUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
+          if($result == true) {
+            $this->loginView->message = "Welcome";
+            $_SESSION['username'] = $_POST['LoginView::UserName'];
+            $_SESSION['passwd'] = $_POST['LoginView::Password'];
+          } else {
+            $this->loginView->message = "Wrong name or password";
           }
         }
-      }
-      if($this->loginView->wantsToLogOut()) {
-        if($this->model->isLoggedIn()) {
-          $this->loginView->message = "Bye bye!";
-          $_SESSION = array();
-          session_destroy();
-          $_POST = array();
-        } else {
+        if($this->loginView->noFormSubmitted()) {
           $this->loginView->message = "";
         }
       }
+      
+      if($this->loginView->wantsToLogOut()) {
+        $this->doLogout();
+      }
     } 
+    
+    private function doLogout() {
+      if($this->model->isLoggedIn()) {
+        $this->loginView->message = "Bye bye!";
+        $_SESSION = array();
+        session_destroy();
+        $_POST = array();
+      } else {
+        $this->loginView->message = "";
+      }
+    }
     
 }
