@@ -25,7 +25,7 @@ class LoginView {
 	 */
 	public function response($isLoggedIn) {
 		$response = '<p><a href="?register">Register a new user</a></p>';
-	    if($isLoggedIn && $this->session->getSessionMessage() !== '')       {
+	    if($isLoggedIn)       {
 	    	$response .= $this->generateLogoutButtonHTML($this->message);
 		} else {
 			$response .= $this->generateLoginFormHTML($this->message);
@@ -55,8 +55,9 @@ class LoginView {
 	// value tidigare $this->getRequestUserName()
 	private function generateLoginFormHTML($message) {
 		
-      if($this->session->getSessionUserName() !== "") {
-		  $this->value = $this->session->getSessionUserName();
+      if($this->session->getSessionNewlyRegisteredUser() !== "") {
+		  $this->value = $this->session->getSessionNewlyRegisteredUser();
+    	  $this->session->setSessionNewslyRegisteredUser('');
       } else {
     	  $this->value = $this->getRequestUserName(); 	
       }

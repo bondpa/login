@@ -10,6 +10,14 @@ class Session {
         }
     }
     
+    public function getSessionNewlyRegisteredUser() {
+        if(isset($_SESSION['newuser'])) {
+            return $_SESSION['newuser'];
+        } else {
+            return '';
+        }
+    }
+    
     public function getSessionMessage() {
         if(isset($_SESSION['message'])) {
             return $_SESSION['message'];
@@ -20,6 +28,10 @@ class Session {
     
     public function setSessionUserName($userName) {
         $_SESSION['username'] = $userName;
+    }
+    
+    public function setSessionNewslyRegisteredUser($userName) {
+        $_SESSION['newuser'] = $userName;
     }
     
     public function setSessionMessage($message) {

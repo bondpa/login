@@ -14,12 +14,12 @@ $router->run();
 // TODO: 
 // *namespaces
 // *kan registrera användare
+// *döp om controller till router
 // hantera session hijacking
 // dela upp modellen och göra den tydligare
 // kommentarer
 // testning
 // instruktion på Github
-// *döp om controller till router
 // hasha lösenord
 // felhantering
 // säkrare sql-variant,

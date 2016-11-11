@@ -19,17 +19,21 @@ class Connection {
     $connection = $this->connection;
     $authorized = false;
     
+    // $stmt = $mysqli->prepare("select * from users where binary userid='?' and binary passwd='?'");
+    // $stmt->bind_param($userName, $password);
+    // $stmt->execute();
     $query = "select * from users where binary userid='" . $userName . "' and binary passwd='" . $password . "'";
     $result = $connection->query($query);
     if(!$result) die($connection->error);
-    
     if (mysqli_num_rows($result) == 0) {
+    // if ($stmt->affected_rows == 0) {
       $authorized = false;
     } else {
       $authorized = true;
     }
     
     $result->close();
+    // $stmt->close();
     
     return $authorized;
 	}
