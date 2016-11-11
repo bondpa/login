@@ -16,13 +16,7 @@ class LoginView {
 	public function __construct() {
 		$this->session = new \model\Session();
 	}
-	/**
-	 * Create HTTP response
-	 *
-	 * Should be called after a login attempt has been determined
-	 *
-	 * @return  void BUT writes to standard output and cookies!
-	 */
+	
 	public function response($isLoggedIn) {
 		$response = '<p><a href="?register">Register a new user</a></p>';
 	    if($isLoggedIn)       {
@@ -33,11 +27,6 @@ class LoginView {
 		return $response;
 	}
 	
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
-	* @return  void, BUT writes to standard output!
-	*/
 	private function generateLogoutButtonHTML($message) {
 		return '
 			<form  method="post" >
@@ -47,14 +36,7 @@ class LoginView {
 		';
 	}
 
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
-	* @return  void, BUT writes to standard output!
-	*/
-	// value tidigare $this->getRequestUserName()
 	private function generateLoginFormHTML($message) {
-		
       if($this->session->getSessionNewlyRegisteredUser() !== "") {
 		  $this->value = $this->session->getSessionNewlyRegisteredUser();
     	  $this->session->setSessionNewslyRegisteredUser('');
@@ -69,21 +51,24 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $message . '</p>
 
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $this->value .'" />
+					<input type="text" id="' . self::$name . '" name="' 
+						. self::$name . '" value="' . $this->value .'" />
 
 					<label for="' . self::$password . '">Password :</label>
-					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
+					<input type="password" id="' . self::$password . '" name="' 
+						. self::$password . '" />
 
 					<label for="' . self::$keep . '">Keep me logged in  :</label>
-					<input type="checkbox" id="' . self::$keep . '" name="' . self::$keep . '" />
+					<input type="checkbox" id="' . self::$keep . '" name="' 
+						. self::$keep . '" />
 
-					<input type="submit" name="' . self::$login . '" value="login" />
+					<input type="submit" name="' . self::$login 
+						. '" value="login" />
 				</fieldset>
 			</form>
 		';
 	}
 	
-	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	public function isRequestUserNameMissing() {
 		return $this->getRequestUserName() === "";
 	}
@@ -102,7 +87,8 @@ class LoginView {
 	}
 	
 	public function userCredentialsAreSubmitted() {
-		return !$this->isRequestPasswordMissing() && !$this->isRequestUserNameMissing();
+		return !$this->isRequestPasswordMissing() 
+			&& !$this->isRequestUserNameMissing();
 	}
 
 	public function noFormSubmitted() {

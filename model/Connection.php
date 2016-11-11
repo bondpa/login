@@ -7,7 +7,8 @@ class Connection {
   private $connection = NULL;
 
 	public function __construct() {
-    $connection = new \mysqli(Configuration::$host, Configuration::$login, Configuration::$password, Configuration::$db);
+    $connection = new \mysqli(Configuration::$host, Configuration::$login, 
+                  Configuration::$password, Configuration::$db);
 
     if($connection->connect_error) {
       die($connection->connect_error);
@@ -55,7 +56,8 @@ class Connection {
 	public function registerUser($userName, $password) {
 	  $hash = password_hash($password, PASSWORD_DEFAULT);
     $connection = $this->connection;
-    $stmt = $connection->prepare("insert into users (userid, passwd) values(?, ?)");
+    $stmt = 
+      $connection->prepare("insert into users (userid, passwd) values(?, ?)");
     $stmt->bind_param('ss', $userName, $hash);
     $stmt->execute();
     $res = $stmt->get_result();

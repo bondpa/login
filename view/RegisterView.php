@@ -13,13 +13,6 @@ class RegisterView {
 	public $message = '';
 	public $registerMessage = '';
 
-	/**
-	 * Create HTTP response
-	 *
-	 * Should be called after a login attempt has been determined
-	 *
-	 * @return  void BUT writes to standard output and cookies!
-	 */
 	public function response($isLoggedIn) {
 		$response = '';
 	    if($isLoggedIn) {
@@ -30,11 +23,6 @@ class RegisterView {
 		return $response;
 	}
 
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
-	* @return  void, BUT writes to standard output!
-	*/
 	private function generateLogoutButtonHTML($message) {
 		return '
 			<form  method="post" >
@@ -54,22 +42,29 @@ class RegisterView {
 					<p id="' . self::$messageId . '">' . $message . '</p>
 
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $this->getrequestusername() .'" /><br>
+					<input type="text" id="' . self::$name . '" name="' 
+					. self::$name . '" value="' . $this->getrequestusername() 
+					.'" /><br>
 
 					<label for="' . self::$password . '">Password :</label>
-					<input type="password" id="' . self::$password . '" name="' . self::$password . '" /><br>
+					<input type="password" id="' . self::$password . '" name="' 
+					. self::$password . '" /><br>
 
-					<label for="' . self::$passwordRepeat . '">Repeat Password :</label>
-					<input type="password" id="' . self::$passwordRepeat .'" name="' . self::$passwordRepeat . '" /><br>
+					<label for="' . self::$passwordRepeat 
+					. '">Repeat Password :</label>
+					<input type="password" id="' . self::$passwordRepeat 
+					.'" name="' . self::$passwordRepeat . '" /><br>
 					
-					<input type="submit" name="' . self::$register . '" value="Register" />
+					<input type="submit" name="' . self::$register 
+					. '" value="Register" />
 				</fieldset>
 			</form>
 		';
 	}
 	
 	public function isTryingToRegister() {
-		if($this->isUserNameLengthValidated() && $this->isPasswordLengthValidated()
+		if($this->isUserNameLengthValidated() 
+			&& $this->isPasswordLengthValidated()
 			&& $this->doPasswordsMatch()) {
 				return true;
 			} else {
@@ -99,16 +94,20 @@ class RegisterView {
 		$password = $this->getRequestPassword();
 		$passwordRepeat = $this->getRequestPasswordRepeat();
 		$name = $this->getRequestUserName();
-		return strlen($password) != 0 && strlen($passwordRepeat) != 0 && strlen($name) != 0;
+		return strlen($password) != 0 && strlen($passwordRepeat) != 0 
+			&& strlen($name) != 0;
 	}
 	
     public function hasSubmittedForm() {
-    	return(isset($_POST[self::$password]) && isset($_POST[self::$passwordRepeat]) && isset($_POST[self::$name]));
+    	return(isset($_POST[self::$password]) 
+    		&& isset($_POST[self::$passwordRepeat]) 
+    		&& isset($_POST[self::$name]));
     }
     
     public function doPasswordsMatch() {
     	if($this->hasSubmittedForm()) {
-	    	return $this->getRequestPassword() === $this->getRequestPasswordRepeat();	
+	    	return $this->getRequestPassword() === 
+	    		   $this->getRequestPasswordRepeat();	
     	} else {
     		return false;
     	}
@@ -116,7 +115,8 @@ class RegisterView {
     
     public function containsInvalidCharactersInUserName() {
         if($this->hasSubmittedForm() && 
-        ($this->getRequestUserName() !== strip_tags($this->getRequestUserName()))) {
+        ($this->getRequestUserName() !== strip_tags(
+        	$this->getRequestUserName()))) {
         	return true;
         } else {
         	return false;

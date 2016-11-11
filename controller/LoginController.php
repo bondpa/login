@@ -50,11 +50,13 @@ class LoginController {
     } 
     
     private function doTryToLogin() {
-      $result = $this->model->isAuthorizedUser($this->layoutView->view->getRequestUserName(), 
-                                              $this->layoutView->view->getRequestPassword());
+      $result = $this->model->isAuthorizedUser(
+                                $this->layoutView->view->getRequestUserName(), 
+                                $this->layoutView->view->getRequestPassword());
       if($result == true) {
         $this->layoutView->view->message = "Welcome";
-        $this->session->setSessionUserName($this->layoutView->view->getRequestUserName());
+        $this->session->setSessionUserName(
+                                $this->layoutView->view->getRequestUserName());
       } else {
         $this->layoutView->view->message = "Wrong name or password";
       }
