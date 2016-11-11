@@ -25,7 +25,7 @@ class LoginView {
 	 */
 	public function response($isLoggedIn) {
 		$response = '<p><a href="?register">Register a new user</a></p>';
-	    if($isLoggedIn) {
+	    if($isLoggedIn && $this->session->getSessionMessage() !== '')       {
 	    	$response .= $this->generateLogoutButtonHTML($this->message);
 		} else {
 			$response .= $this->generateLoginFormHTML($this->message);
