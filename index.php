@@ -12,7 +12,7 @@ $router->run();
 
 // TODO: 
 // *namespaces
-// kan registrera användare
+// *kan registrera användare
 // hantera session hijacking
 // dela upp modellen och göra den tydligare
 // kommentarer
