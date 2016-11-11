@@ -19,45 +19,46 @@ class Connection {
     $connection = $this->connection;
     $authorized = false;
     
-    // $stmt = $mysqli->prepare("select * from users where binary userid='?' and binary passwd='?'");
-    // $stmt->bind_param($userName, $password);
-    // $stmt->execute();
-    $query = "select * from users where binary userid='" . $userName . "' and binary passwd='" . $password . "'";
-    $result = $connection->query($query);
-    if(!$result) die($connection->error);
-    if (mysqli_num_rows($result) == 0) {
-    // if ($stmt->affected_rows == 0) {
+    $stmt = $connection->prepare("select * from users where binary userid=? and binary passwd=?");
+    $stmt->bind_param('ss', $userName, $password);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $row_cnt = mysqli_num_rows($res);
+    if(!$res) die($connection->error);
+    if ($row_cnt == 0) {
       $authorized = false;
     } else {
       $authorized = true;
     }
-    
-    $result->close();
-    // $stmt->close();
-    
+    $stmt->close();
     return $authorized;
 	}
 	
 	public function isExistingUserName($userName) {
 	  $connection = $this->connection;
     $exists = false;    
-    $query = "select * from users where binary userid='" . $userName . "'";
-    $result = $connection->query($query);
-    if(!$result) die($connection->error);
-    if (mysqli_num_rows($result) == 0) {
+    $stmt = $connection->prepare("select * from users where binary userid=?");
+    $stmt->bind_param('s', $userName);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $row_cnt = mysqli_num_rows($res);
+    if(!$res) die($connection->error);
+    if ($row_cnt == 0) {
       $exists = false;
     } else {
       $exists = true;
     }
-    $result->close();
+    $stmt->close();
     return $exists;
 	}
 	
 	public function registerUser($userName, $password) {
     $connection = $this->connection;
-    $query = "insert into users (userid, passwd) values('" . $userName . "', '" . $password . "')";
-    $result = $connection->query($query);
-    if(!$result) die($connection->error);
+    $stmt = $connection->prepare("insert into users (userid, passwd) values(?, ?)");
+    $stmt->bind_param('ss', $userName, $password);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $stmt->close();
 	}
 	
 	
