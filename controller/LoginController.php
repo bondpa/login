@@ -42,6 +42,10 @@ class LoginController {
       if($this->layoutView->view->noFormSubmitted()) {
         $this->layoutView->view->message = "";
       }
+      if(!empty($this->model->message)) {
+          $this->layoutView->view->message = $this->model->message;
+          $this->model->message = "";
+      }
     } 
     
     private function doTryToLogin() {

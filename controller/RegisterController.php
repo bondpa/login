@@ -37,6 +37,7 @@ class RegisterController {
       if($this->layoutView->view->containsInvalidCharactersInUserName()) {
         $this->layoutView->view->registerMessage = "Username contains invalid characters.";
         $this->layoutView->view->removeInvalidCharactersFromUserName();
+        return;
       }
       if(!$this->layoutView->view->hasSubmittedForm()) {
         $this->layoutView->view->registerMessage = '';   
@@ -44,6 +45,7 @@ class RegisterController {
       if($this->layoutView->view->isTryingToRegister()) {
           if(!$this->model->isExistingUserName($this->layoutView->view->getRequestUserName())) {
               $this->model->registerUser($this->layoutView->view->getRequestUserName(), $this->layoutView->view->getRequestPassword());
+              $this->model->message = "Registered new user.";
               header("Location: /");
           } else {
               $this->layoutView->view->registerMessage = "User exists, pick another username.";
