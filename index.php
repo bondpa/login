@@ -1,7 +1,6 @@
 <?php 
 session_start();   
 require_once('controller/Router.php');  
-
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER 
 error_reporting(E_ALL); 
 ini_set('display_errors', 'On');
@@ -15,6 +14,7 @@ $router->run();
 // *namespaces
 // *kan registrera användare
 // *döp om controller till router
+// *säkrare sql-variant,
 // hantera session hijacking
 // dela upp modellen och göra den tydligare
 // kommentarer
@@ -22,6 +22,5 @@ $router->run();
 // instruktion på Github
 // hasha lösenord
 // felhantering
-// säkrare sql-variant,
 // logga in med cookie
 // hitta på sätt att slippa detta fula: if(!$this->layoutView->view->isUserNameLengthValidated()) {
