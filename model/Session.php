@@ -11,7 +11,11 @@ class Session {
     }
     
     public function getSessionPassword() {
-        return $_SESSION['passwd'];
+        if(isset($_SESSION['passwd'])) {
+            return $_SESSION['passwd'];
+        } else {
+            return '';
+        }
     }
     
     public function getSessionMessage() {
@@ -33,4 +37,13 @@ class Session {
     public function setSessionMessage($message) {
         $_SESSION['message'] = $message;
     }
+    
+	public function isLoggedIn() {
+        if(!empty($_SESSION['username']) and !empty($_SESSION['passwd'])) { 
+            return true;  
+        } else {
+	        return false; 
+        }
+	}
+	
 }

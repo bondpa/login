@@ -18,7 +18,7 @@ class LoginController {
     
     public function run() {
       $this->doLoginMode();
-      $this->layoutView->render($this->model->isLoggedIn());
+      $this->layoutView->render($this->session->isLoggedIn());
     }
     
     private function doLoginMode() {
@@ -31,7 +31,7 @@ class LoginController {
         $this->doLogout();
         return;
       }
-      if($this->model->isLoggedIn()) {
+      if($this->session->isLoggedIn()) {
         $this->layoutView->view->message = "";
         return;
       }
@@ -62,7 +62,7 @@ class LoginController {
     }
     
     private function doLogout() {
-      if($this->model->isLoggedIn()) {
+      if($this->session->isLoggedIn()) {
         $this->layoutView->view->message = "Bye bye!";
         $_SESSION = array();
         session_destroy();

@@ -56,13 +56,4 @@ class Connection {
     if(!$result) die($connection->error);
 	}
 	
-	public function isLoggedIn() {
-    if(!empty($_SESSION['username']) and !empty($_SESSION['passwd'])) {
-      return true;  
-    } else {
-	  return false; 
-    }
-	}
-	
-	
 }

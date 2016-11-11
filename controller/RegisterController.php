@@ -18,7 +18,7 @@ class RegisterController {
     
     public function run() {
       $this->doRegisterMode();
-      $this->layoutView->render($this->model->isLoggedIn());
+      $this->layoutView->render($this->session->isLoggedIn());
     }
     
     private function doRegisterMode() {
