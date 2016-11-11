@@ -68,6 +68,15 @@ class RegisterView {
 		';
 	}
 	
+	public function isTryingToRegister() {
+		if($this->isUserNameLengthValidated() && $this->isPasswordLengthValidated()
+			&& $this->doPasswordsMatch()) {
+				return true;
+			} else {
+				return false;
+			}
+	}
+	
 	public function isPasswordLengthValidated() {
 		$password = $this->getRequestPassword();
 		if(strlen($password) < self::$minPasswordLength) {
