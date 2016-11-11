@@ -45,7 +45,8 @@ class RegisterController {
       if($this->layoutView->view->isTryingToRegister()) {
           if(!$this->model->isExistingUserName($this->layoutView->view->getRequestUserName())) {
               $this->model->registerUser($this->layoutView->view->getRequestUserName(), $this->layoutView->view->getRequestPassword());
-              $this->model->message = "Registered new user.";
+              $this->session->setSessionMessage("Registered new user.");
+              $this->session->setSessionUserName($this->layoutView->view->getRequestUserName());
               header("Location: /");
           } else {
               $this->layoutView->view->registerMessage = "User exists, pick another username.";

@@ -5,7 +5,6 @@ require_once('db-config.php');
 
 class Connection {
   private $connection = NULL;
-  public $message = '';
 
 	public function __construct() {
     $connection = new \mysqli(Configuration::$host, Configuration::$login, Configuration::$password, Configuration::$db);

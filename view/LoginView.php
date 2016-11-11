@@ -1,5 +1,6 @@
 <?php
 namespace view;
+require_once('model/Session.php');
 
 class LoginView {
 	private static $login = 'LoginView::Login';
@@ -9,7 +10,12 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 	public $message = '';
+	private $session;
+	private $value;
 
+	public function __construct() {
+		$this->session = new \model\Session();
+	}
 	/**
 	 * Create HTTP response
 	 *
@@ -46,7 +52,15 @@ class LoginView {
 	* @param $message, String output message
 	* @return  void, BUT writes to standard output!
 	*/
+	// value tidigare $this->getRequestUserName()
 	private function generateLoginFormHTML($message) {
+		
+      if($this->session->getSessionUserName() !== "") {
+		  $this->value = $this->session->getSessionUserName();
+      } else {
+    	  $this->value = $this->getRequestUserName(); 	
+      }
+      
 		return '
 			<form method="post" >
 				<fieldset>
@@ -54,7 +68,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $message . '</p>
 
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $this->getRequestUserName() .'" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $this->value .'" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />

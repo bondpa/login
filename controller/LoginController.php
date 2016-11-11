@@ -22,6 +22,11 @@ class LoginController {
     }
     
     private function doLoginMode() {
+      if($this->session->getSessionMessage() !== "") {
+          $this->layoutView->view->message = $this->session->getSessionMessage();
+          $this->session->setSessionMessage('');
+          return;
+      }
       if($this->layoutView->view->wantsToLogOut()) {
         $this->doLogout();
         return;
@@ -41,10 +46,6 @@ class LoginController {
       }
       if($this->layoutView->view->noFormSubmitted()) {
         $this->layoutView->view->message = "";
-      }
-      if(!empty($this->model->message)) {
-          $this->layoutView->view->message = $this->model->message;
-          $this->model->message = "";
       }
     } 
     
