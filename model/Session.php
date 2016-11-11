@@ -10,14 +10,6 @@ class Session {
         }
     }
     
-    public function getSessionPassword() {
-        if(isset($_SESSION['passwd'])) {
-            return $_SESSION['passwd'];
-        } else {
-            return '';
-        }
-    }
-    
     public function getSessionMessage() {
         if(isset($_SESSION['message'])) {
             return $_SESSION['message'];
@@ -30,17 +22,13 @@ class Session {
         $_SESSION['username'] = $userName;
     }
     
-    public function setSessionPassword($password) {
-        $_SESSION['passwd'] = $password;
-    }
-    
     public function setSessionMessage($message) {
         $_SESSION['message'] = $message;
     }
     
 	public function isLoggedIn() {
-        if(!empty($_SESSION['username']) and !empty($_SESSION['passwd'])) { 
-            return true;  
+        if(!empty($_SESSION['username'])) { 
+            return true; 
         } else {
 	        return false; 
         }

@@ -55,7 +55,6 @@ class LoginController {
       if($result == true) {
         $this->layoutView->view->message = "Welcome";
         $this->session->setSessionUserName($this->layoutView->view->getRequestUserName());
-        $this->session->setSessionPassword($this->layoutView->view->getRequestPassword());
       } else {
         $this->layoutView->view->message = "Wrong name or password";
       }

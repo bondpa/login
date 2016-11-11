@@ -1,4 +1,5 @@
-<?php session_start();   
+<?php 
+session_start();   
 require_once('controller/Router.php');  
 
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER 
